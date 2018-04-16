@@ -135,16 +135,22 @@ class Checker {
 	function makeAST(defines:Array<String>):Ast {
 		var code = file.content;
 		var parser = new HaxeParser(byte.ByteData.ofString(code), file.name);
-		parser.define("cross");
-		parser.define("scriptable");
-		parser.define("unsafe");
+		var actualDefines:Map<String, Dynamic> = ["cross" => true, "scriptable" => true, "unsafe" => true];
+		for (d in actualDefines.keys()) parser.define(d);
+		
 		for (define in defines) {
 			var flagValue = define.split("=");
 			parser.define(flagValue[0], flagValue[1]);
+			actualDefines.set(flagValue[0], flagValue[1]);
 		}
 
 		try {
-			return parser.parse();
+			var parsed = parser.parse();
+			return {
+				pack: parsed.pack,
+				decls: parsed.decls,
+				defines: actualDefines
+			}
 		}
 		catch (e:Any) {
 			#if debug
@@ -314,4 +320,5 @@ typedef LineIds = {
 typedef Ast = {
 	var pack:Array<String>;
 	var decls:Array<TypeDecl>;
+	var defines:Map<String, Dynamic>;
 }
