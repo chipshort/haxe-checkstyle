@@ -132,7 +132,7 @@ class Checker {
 		var parser = new HaxeParser(byte.ByteData.ofString(code), file.name);
 		var actualDefines:Map<String, Dynamic> = ["cross" => true, "scriptable" => true, "unsafe" => true];
 		for (d in actualDefines.keys()) parser.define(d);
-		
+
 		for (define in defines) {
 			var flagValue = define.split("=");
 			parser.define(flagValue[0], flagValue[1]);

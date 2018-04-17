@@ -24,8 +24,6 @@ class TokenTreeBuilderParsingTest {
 		assertCodeParses(DOLLAR_TOKEN_AS_VAR_NAME);
 		assertCodeParses(REFERENCE_CONSTRUCTOR);
 		assertCodeParses(SHORT_LAMBDA);
-		assertCodeParses(TERNARY_WITH_KEYWORD);
-		assertCodeParses(OBJECT_WITH_ARRAY);
 		assertCodeParses(EXPRESSION_METADATA_ISSUE_365);
 		assertCodeParses(MULTIPLE_METADATAS);
 		assertCodeParses(TERNARY_WITH_KEYWORD);
@@ -192,21 +190,6 @@ abstract TokenTreeBuilderParsingTests(String) to String {
 			@test 5 - @test 2;
 		}
 	}";
-
-	var TERNARY_WITH_KEYWORD = "
-	class Test {
-		function foo() {
-			doSomething(withThis, Std.is(args, Array) ? cast args : [args]);
-		}
-	}";
-
-	var OBJECT_WITH_ARRAY = "
-	class Test2 {
-		var t = {
-			arg: [2, 3]
-		};
-	}
-	";
 
 	var SHORT_LAMBDA = "
 		class TestArrowFunctions extends Test {

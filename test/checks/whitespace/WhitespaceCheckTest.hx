@@ -2,6 +2,7 @@ package checks.whitespace;
 
 import checkstyle.checks.whitespace.WhitespaceCheck;
 import haxe.PosInfos;
+import massive.munit.Assert;
 
 class WhitespaceCheckTest extends CheckTestCase<WhitespaceCheckTests> {
 
@@ -130,7 +131,7 @@ class WhitespaceCheckTest extends CheckTestCase<WhitespaceCheckTests> {
 		var context = createContext();
 
 		function assertSelector(query:String, expected:Bool, ?pos:PosInfos) {
-			assertEquals(expected, ContextSelector.fromString(query).matches(context), pos);
+			Assert.areEqual(expected, ContextSelector.fromString(query).matches(context), pos);
 			context = createContext();
 		}
 		assertSelector("Function>Block *>TypeParameter", true);
