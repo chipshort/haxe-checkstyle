@@ -3,7 +3,6 @@ package checkstyle.utils;
 class ConditionalUtils {
 
     public static function isReachable(token:TokenTree, defines:Map<String, Dynamic>):Bool {
-		trace("Checking " + token.tok + " " + token.pos + " for " + defines);
 		var parent:TokenTree = token.parent;
 		while (parent != null) {
 			if (parent.tok == null) return true;
@@ -11,8 +10,6 @@ class ConditionalUtils {
 				case Sharp(s):
 					if (s != "end" && !evaluateConditional(parent, defines)) return false;
 					
-					trace("Found " + s);
-					trace(parent.printTokenTree());
 					if (s == "else" || s == "elseif") {
 						parent = parent.parent; //ignore corresponding if
 					}
@@ -28,7 +25,7 @@ class ConditionalUtils {
 			case Sharp(s):
 				if (s == "else") {
 					return !evaluateConditional(token.parent, defines);
-				} else if (s == "elseif") { //TODO: test if this actually works
+				} else if (s == "elseif") {
 					return !evaluateConditional(token.parent, defines) && evaluateConditional(token.getFirstChild(), defines);
 				} else if (s == "if") {
 					return evaluateConditional(token.getFirstChild(), defines);
@@ -79,7 +76,6 @@ class ConditionalInterpreter {
         var source = new CheckstyleTokenSource(tokens);
         var parser = new haxeparser.HaxeParser.HaxeCondParser(source);
         parsed = parser.parseMacroCond(false).expr;
-		trace("Parsed condition: " + parsed + " with " + defines);
     }
 
     public function evaluate():Bool {

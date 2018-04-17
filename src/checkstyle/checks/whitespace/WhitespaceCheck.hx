@@ -446,7 +446,6 @@ class WhitespaceCheck extends Check {
 					if (walkExpr(c.expr, token, stack)) return true;
 				}
 			case EReturn(e):
-				logPos("It's a return", token.pos, INFO);
 				if (walkExpr(e, token, stack)) return true;
 			case EBreak:
 				return true;
@@ -516,7 +515,6 @@ class WhitespaceCheck extends Check {
 	function checkTokens(root:TokenTree, toks:Array<TokenDef>) {
 		if (policies == null || policies.empty() || policies.contains(IGNORE)) return;
 		var tokenList:Array<TokenTree> = root.filter(toks, ALL);
-		trace(root.printTokenTree());
 		checkTokenList(tokenList);
 	}
 
@@ -556,7 +554,6 @@ class WhitespaceCheck extends Check {
 			if (before == "") whitespaceBefore = false;
 			if (after == "") whitespaceAfter = false;
 		}
-		//logPos('$whitespaceBefore "$before"', tok.pos, INFO);
 
 		checkCallback(whitespaceBefore, whitespaceAfter);
 	}
@@ -621,8 +618,6 @@ class WhitespaceCheck extends Check {
 		var stack = new List<TokenContext>();
 
 		if (!token.isReachable(checker.ast.defines)) return null;
-		trace("test");
-		logPos(checker.ast.defines + "", token.pos, INFO);
 		walkFile(checker.ast, token, stack);
 
 		//now apply some tweaks that are needed because of limited position information
@@ -657,7 +652,7 @@ class WhitespaceCheck extends Check {
 			if (stack.first() != BINOP) stack.push(BINOP);
 		}
 
-		logPos(token.tok + " " + stack, token.pos, INFO);
+		// logPos(token.tok + " " + stack, token.pos, INFO);
 
 		return stack;
 	}
