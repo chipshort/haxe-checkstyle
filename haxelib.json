@@ -17,7 +17,7 @@
 		"adireddy"
 	],
 	"releasenote": "added enforceReturnTypeForAnonymous option to ReturnCheck #357",
-	"version": "2.1.17-alpha.2",
+	"version": "2.1.17-alpha.3",
 	"url": "https://github.com/HaxeCheckstyle/haxe-checkstyle",
 	"dependencies": {
 
